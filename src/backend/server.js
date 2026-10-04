@@ -5,9 +5,11 @@ const PORT = process.env.PORT
 const cors = require('cors')
 const sequelize = require('./config/configdb')
 const models = require('./models/models')
+const router = require('./routes/routes')
 
 app.use(express.json())
 app.use(cors())
+app.use('/api', router)
 
 async function start() {
     try {

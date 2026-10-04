@@ -8,7 +8,7 @@ const User = sequelize.define('Users', {
     email: { type: DataTypes.STRING, validate: { isEmail: true } },
     phone: { type: DataTypes.STRING },
     password: { type: DataTypes.STRING, validate: { min: 6 } },
-    role: { type: DataTypes.ENUM('ADMIN', 'USER', 'Employee'), defaultValue: 'USER' }
+    role: { type: DataTypes.ENUM('ADMIN', 'USER', 'MANAGER'), defaultValue: 'USER' }
 }, {
     updateAt: false
 })
@@ -17,17 +17,8 @@ const Request = sequelize.define('Requests', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     name: { type: DataTypes.STRING },
     phone: { type: DataTypes.STRING },
-    email: { type: DataTypes.STRING, validate: { isEmail: true } }
-}, {
-    updateAt: false
-})
-
-const Review = sequelize.define('Reviews', {
-    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    name: { type: DataTypes.STRING },
-    feedback: { type: DataTypes.STRING },
-    rating: { type: DataTypes.INTEGER, validate: { min: 1, max: 5 } },
-    status: { type: DataTypes.ENUM('Approved', 'Consideration', 'Rejected'), defaultValue: 'Consideration' }
+    email: { type: DataTypes.STRING, validate: { isEmail: true } },
+    status: {type: DataTypes.ENUM('Processed', 'Waiting'), defaultValue: 'Waiting'}
 }, {
     updateAt: false
 })
@@ -58,7 +49,4 @@ User.belongsToMany(Object, {
 User.hasMany(Request)
 Request.belongsTo(User)
 
-User.hasMany(Review)
-Review.belongsTo(User)
-
-module.exports = { User, Request, Review, Object }
+module.exports = { User, Request, Object }
