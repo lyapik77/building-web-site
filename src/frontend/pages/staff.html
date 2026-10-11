@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Панель сотрудника — Высота</title>
+<script src="/script/theme.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Days+One&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style/style.css">
+<link rel="stylesheet" href="/style/cabinet.css">
+</head>
+<body class="app">
+
+<header class="cab-header">
+  <div class="cab-header__inner">
+    <a href="/" class="logo-link" aria-label="Высота — на главную"><img class="logo-img logo-img--for-light" src="/img/logo-navy.png" alt="Высота"><img class="logo-img logo-img--for-dark" src="/img/logo-white.png" alt="" aria-hidden="true"></a>
+    <div class="cab-user">
+      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Сменить тему">
+      <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5z"/></svg>
+      <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+      <div>
+        <span class="cab-user__name" id="userName"></span>
+        <span class="cab-user__role" id="userRole"></span>
+      </div>
+      <button class="btn btn--sm btn--ghost" id="logoutBtn" type="button">Выйти</button>
+    </div>
+  </div>
+</header>
+
+<nav class="cab-nav" aria-label="Разделы панели">
+  <div class="cab-nav__inner">
+    <button class="cab-nav__btn is-active" data-tab="requests" type="button">Заявки <span class="cab-nav__count" id="cntRequests">0</span></button>
+    <button class="cab-nav__btn" data-tab="objects" type="button">Объекты <span class="cab-nav__count" id="cntObjects">0</span></button>
+    <button class="cab-nav__btn" data-tab="users" type="button">Пользователи <span class="cab-nav__count" id="cntUsers">0</span></button>
+  </div>
+</nav>
+
+<main class="cab-main" id="app" hidden>
+
+  <!-- ЗАЯВКИ -->
+  <section class="cab-section is-active" id="tab-requests">
+    <div class="cab-head"><div><h2>Заявки</h2><p>Обращения с сайта и от клиентов.</p></div></div>
+    <div class="stats" id="requestStats"></div>
+    <div class="toolbar">
+      <input type="search" id="reqSearch" placeholder="Поиск по имени, телефону, email" aria-label="Поиск по заявкам">
+      <select id="reqFilter" aria-label="Фильтр по статусу">
+        <option value="">Все статусы</option>
+        <option value="Waiting">Ожидают</option>
+        <option value="Processed">Обработаны</option>
+      </select>
+    </div>
+    <div class="table-wrap">
+      <table class="table">
+        <thead><tr><th>№</th><th>Дата</th><th>Клиент</th><th>Контакты</th><th>Статус</th><th></th></tr></thead>
+        <tbody id="requestsBody"><tr><td colspan="6" class="loading">Загрузка…</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ОБЪЕКТЫ -->
+  <section class="cab-section" id="tab-objects">
+    <div class="cab-head">
+      <div><h2>Объекты</h2><p>Строящиеся и сданные объекты, привязка клиентов.</p></div>
+      <button class="btn btn--sm" id="newObjectBtn" type="button">+ Новый объект</button>
+    </div>
+    <div class="toolbar">
+      <input type="search" id="objSearch" placeholder="Поиск по названию или адресу" aria-label="Поиск по объектам">
+      <select id="objFilter" aria-label="Фильтр по статусу">
+        <option value="">Все статусы</option>
+        <option value="inProcess">В работе</option>
+        <option value="Completed">Завершён</option>
+        <option value="Suspended">Приостановлен</option>
+        <option value="Closed">Закрыт</option>
+      </select>
+    </div>
+    <div class="table-wrap">
+      <table class="table">
+        <thead><tr><th>№</th><th>Объект</th><th>Статус</th><th>Клиенты</th><th></th></tr></thead>
+        <tbody id="objectsBody"><tr><td colspan="5" class="loading">Загрузка…</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ПОЛЬЗОВАТЕЛИ -->
+  <section class="cab-section" id="tab-users">
+    <div class="cab-head">
+      <div><h2>Пользователи</h2><p id="usersHint">Клиенты и сотрудники компании.</p></div>
+      <button class="btn btn--sm" id="newUserBtn" type="button" hidden>+ Добавить пользователя</button>
+    </div>
+    <div class="toolbar">
+      <input type="search" id="userSearch" placeholder="Поиск по имени или email" aria-label="Поиск по пользователям">
+      <select id="userFilter" aria-label="Фильтр по роли">
+        <option value="">Все роли</option>
+        <option value="USER">Клиенты</option>
+        <option value="MANAGER">Менеджеры</option>
+        <option value="ADMIN">Администраторы</option>
+      </select>
+    </div>
+    <div class="table-wrap">
+      <table class="table">
+        <thead><tr><th>№</th><th>Пользователь</th><th>Телефон</th><th>Роль</th><th>Регистрация</th><th></th></tr></thead>
+        <tbody id="usersBody"><tr><td colspan="6" class="loading">Загрузка…</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<!-- Диалог: новый объект -->
+<dialog class="modal" id="objectDialog">
+  <form class="modal__body form-grid" id="objectForm" method="dialog" novalidate>
+    <h3>Новый объект</h3>
+    <div class="f-field"><label for="objName">Название</label><input type="text" id="objName" name="name" placeholder="Жилой квартал «Линии»" required></div>
+    <div class="f-field"><label for="objLocation">Адрес</label><input type="text" id="objLocation" name="location" placeholder="Город, улица" required></div>
+    <p class="form-msg" role="alert"></p>
+    <div class="form-actions">
+      <button class="btn" type="submit">Создать</button>
+      <button class="btn btn--ghost" type="button" data-close>Отмена</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- Диалог: привязка клиента -->
+<dialog class="modal" id="linkDialog">
+  <form class="modal__body form-grid" id="linkForm" method="dialog" novalidate>
+    <h3 id="linkTitle">Привязать клиента</h3>
+    <div class="f-field">
+      <label for="linkEmail">Email клиента</label>
+      <input type="email" id="linkEmail" name="email" list="clientEmails" placeholder="client@example.com" required>
+      <datalist id="clientEmails"></datalist>
+    </div>
+    <p class="form-msg" role="alert"></p>
+    <div class="form-actions">
+      <button class="btn" type="submit">Привязать</button>
+      <button class="btn btn--ghost" type="button" data-close>Отмена</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- Диалог: новый пользователь (только администратор) -->
+<dialog class="modal" id="userDialog">
+  <form class="modal__body form-grid" id="userForm" method="dialog" novalidate>
+    <h3>Новый пользователь</h3>
+    <div class="form-grid form-grid--2">
+      <div class="f-field"><label for="uName">Имя</label><input type="text" id="uName" name="name" required></div>
+      <div class="f-field"><label for="uSurname">Фамилия</label><input type="text" id="uSurname" name="surname" required></div>
+    </div>
+    <div class="f-field"><label for="uPhone">Телефон</label><input type="tel" id="uPhone" name="phone" required></div>
+    <div class="f-field"><label for="uEmail">Email</label><input type="email" id="uEmail" name="email" required></div>
+    <div class="form-grid form-grid--2">
+      <div class="f-field"><label for="uPassword">Пароль</label><input type="password" id="uPassword" name="password" autocomplete="new-password" minlength="6" required></div>
+      <div class="f-field">
+        <label for="uRole">Роль</label>
+        <select id="uRole" name="role">
+          <option value="MANAGER">Менеджер</option>
+          <option value="ADMIN">Администратор</option>
+          <option value="USER">Клиент</option>
+        </select>
+      </div>
+    </div>
+    <p class="form-msg" role="alert"></p>
+    <div class="form-actions">
+      <button class="btn" type="submit">Создать</button>
+      <button class="btn btn--ghost" type="button" data-close>Отмена</button>
+    </div>
+  </form>
+</dialog>
+
+<script src="/script/api.js"></script>
+<script src="/script/staff.js"></script>
+</body>
+</html>

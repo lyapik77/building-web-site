@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Вход и регистрация — Высота</title>
+<script src="/script/theme.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Days+One&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style/style.css">
+<link rel="stylesheet" href="/style/cabinet.css">
+</head>
+<body class="app" data-mode="client">
+<div class="auth">
+  <aside class="auth__aside">
+    <a href="/" class="logo-link" aria-label="Высота — на главную"><img class="logo-img" src="/img/logo-white.png" alt="Высота"></a>
+    <div>
+      <span class="eyebrow">Личный кабинет</span>
+      <h1>Ваш проект —<br>всегда под рукой.</h1>
+      <p>Следите за ходом строительства объектов, отправляйте заявки и храните свои данные в одном месте.</p>
+    </div>
+    <span></span>
+  </aside>
+
+  <main class="auth__main">
+    <button class="theme-toggle theme-toggle--float" type="button" data-theme-toggle aria-label="Сменить тему">
+      <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5z"/></svg>
+      <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+    <div class="auth__card">
+      <div class="tabs" role="tablist">
+        <button class="tabs__btn is-active" role="tab" data-tab="login" type="button">Вход</button>
+        <button class="tabs__btn" role="tab" data-tab="register" type="button">Регистрация</button>
+      </div>
+
+      <!-- Вход -->
+      <form id="loginForm" class="form-grid" novalidate>
+        <div class="f-field">
+          <label for="loginEmail">Email</label>
+          <input type="email" id="loginEmail" name="email" autocomplete="email" placeholder="you@example.com" required>
+        </div>
+        <div class="f-field">
+          <label for="loginPassword">Пароль</label>
+          <input type="password" id="loginPassword" name="password" autocomplete="current-password" required>
+        </div>
+        <p class="form-msg" role="alert"></p>
+        <div class="form-actions">
+          <button type="submit" class="btn btn--block">Войти</button>
+        </div>
+      </form>
+
+      <!-- Регистрация -->
+      <form id="registerForm" class="form-grid" novalidate hidden>
+        <div class="form-grid form-grid--2">
+          <div class="f-field">
+            <label for="regName">Имя</label>
+            <input type="text" id="regName" name="name" autocomplete="given-name" required>
+          </div>
+          <div class="f-field">
+            <label for="regSurname">Фамилия</label>
+            <input type="text" id="regSurname" name="surname" autocomplete="family-name" required>
+          </div>
+        </div>
+        <div class="f-field">
+          <label for="regPhone">Телефон</label>
+          <input type="tel" id="regPhone" name="phone" autocomplete="tel" placeholder="+7 000 000-00-00" required>
+        </div>
+        <div class="f-field">
+          <label for="regEmail">Email</label>
+          <input type="email" id="regEmail" name="email" autocomplete="email" placeholder="you@example.com" required>
+        </div>
+        <div class="form-grid form-grid--2">
+          <div class="f-field">
+            <label for="regPassword">Пароль</label>
+            <input type="password" id="regPassword" name="password" autocomplete="new-password" minlength="6" required>
+          </div>
+          <div class="f-field">
+            <label for="regPassword2">Повторите пароль</label>
+            <input type="password" id="regPassword2" name="password2" autocomplete="new-password" required>
+          </div>
+        </div>
+        <p class="form-msg" role="alert"></p>
+        <div class="form-actions">
+          <button type="submit" class="btn btn--block">Создать аккаунт</button>
+        </div>
+        <p class="consent" style="font-size:12px;color:var(--muted)">Регистрируясь, вы соглашаетесь с <a href="/privacy" target="_blank" rel="noopener">политикой конфиденциальности</a> и обработкой персональных данных.</p>
+      </form>
+
+      <p class="auth__switch">Вы сотрудник компании? <a href="/staff-login">Вход для сотрудников</a></p>
+    </div>
+  </main>
+</div>
+<script src="/script/api.js"></script>
+<script src="/script/auth.js"></script>
+</body>
+</html>
